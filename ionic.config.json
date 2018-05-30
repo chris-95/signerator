@@ -1,0 +1,8 @@
+{
+  "name": "signerator",
+  "app_id": "6ff3581b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
