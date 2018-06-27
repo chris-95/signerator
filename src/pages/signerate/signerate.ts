@@ -3,8 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NavController} from "ionic-angular";
 
 import makerjs from 'makerjs';
-let opentype = require('opentype.js');
-import paper from 'paper';
+declare var opentype: any;
 
 @Component({
   selector: 'page-signerate',
