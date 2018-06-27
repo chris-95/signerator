@@ -1,3 +1,33 @@
 page-home {
 
+  .settings {
+    display: flex;
+    justify-content: space-around;
+
+    button:first-child, button:last-child {
+      display: none;
+    }
+
+    button {
+     background: transparent;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
+  }
+
+  // buttons
+  #invertColors {
+
+  }
+
+  #colorize {
+
+  }
+
+  #camera {
+
+  }
 }
