@@ -25,7 +25,7 @@ export class HomePage {
     letters.visible = true;
     let firstLetter = letters.children.firstLetter;
     let secondLetter = letters.children.secondLetter;
-    firstLetter.position = [52, 70];
+    firstLetter.position = [52, 300];
     //console.log(firstLetter.children[0].intersects(secondLetter.children[0]));
 
     let generateSign = function () {
