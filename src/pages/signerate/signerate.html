@@ -9,4 +9,82 @@
 
 <ion-content>
 
+
+  <ion-slides #signupSlider pager (ionSlideDidChange)="onSlideChange()">
+
+    <ion-slide>
+      <h1>Fill out your initials!</h1>
+
+      <ion-list no-lines>
+
+        <form [formGroup]="slideOneForm">
+
+          <ion-item>
+            <ion-label floating>1st Letter</ion-label>
+            <ion-input formControlName="firstLetter" type="text" [class.invalid]="!slideOneForm.controls.firstLetter.valid && (slideOneForm.controls.firstLetter.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!slideOneForm.controls.firstLetter.valid  && (slideOneForm.controls.firstLetter.dirty || submitAttempt)">
+            <p>Please enter a letter.</p>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>2nd Letter</ion-label>
+            <ion-input formControlName="secondLetter" type="text" [class.invalid]="!slideOneForm.controls.secondLetter.valid && (slideOneForm.controls.secondLetter.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!slideOneForm.controls.secondLetter.valid  && (slideOneForm.controls.secondLetter.dirty || submitAttempt)">
+            <p>Please enter a letter.</p>
+          </ion-item>
+
+        </form>
+
+      </ion-list>
+
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Choose a font!</h1>
+
+        <form [formGroup]="slideTwoForm">
+          <ion-list no-lines radio-group formControlName="font" [(ngModel)]="selectedFont">
+            <ion-item *ngFor="let font of fonts">
+              <ion-label>{{font.name}}</ion-label>
+              <ion-radio value="{{font.name}}"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </form>
+
+    </ion-slide>
+
+    <ion-slide>
+      <h1>Choose a font style!</h1>
+
+
+        <form [formGroup]="slideThreeForm">
+          <ion-list no-lines radio-group formControlName="url" [(ngModel)]="fontURL">
+            <div *ngFor="let font of fonts">
+              <div *ngFor="let style of font['styles']">
+                <ion-item *ngIf="font.name == selectedFont">
+                  <ion-label>{{style.type}}</ion-label>
+                  <ion-radio [disabled]="style.url === ''" value="{{style.url}}"></ion-radio>
+                </ion-item>
+              </div>
+            </div>
+      </ion-list>
+        </form>
+
+
+      <!--<button ion-button full color="primary" (click)="save()">Create Account!</button>-->
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list>
+          <ion-item>
+            <div id="renderDiv"></div>
+            <h2 *ngIf="!showPreview">Please fill out everything!</h2>
+          </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
