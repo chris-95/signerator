@@ -21,14 +21,14 @@ export class HomePage {
   sign: any;
   background: string = WHITE;
 
-  firstLetterSign: object = {
+  firstLetterSign: any = {
     alpha: 0,
     x: 0,
     y: 0,
     color: BLACK
   };
 
-  secondLetterSign: object = {
+  secondLetterSign: any = {
     alpha: 0,
     x: 0,
     y: 0,
@@ -72,13 +72,13 @@ export class HomePage {
 
   // TODO FIXME :D
   saveScreenShot() {
-    const imageMask = document.getElementById("imageMask");
+    const imageMask = <HTMLMediaElement> document.getElementById("imageMask");
     const imageBackground = document.getElementsByClassName("canvas-container")[0];
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
 
     // Set imageMask width/height to fit current canvas
     imageMask.style.width = myCanvas.style.width;
-    imageMask.style.width = myCanvas.style.height;
+    imageMask.style.height = myCanvas.style.height;
 
     // Get Canvas then extract a base46 image
 
