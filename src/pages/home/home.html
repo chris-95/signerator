@@ -8,12 +8,15 @@
 </ion-header>
 
 <ion-content padding>
-  <canvas id="myCanvas" width="500" height="500"></canvas>
+  <div class="canvas-container">
+    <canvas id="myCanvas" width="500" height="500" style="border: 1px solid #000"></canvas>
+    <img id="imageMask" src=" ">
+  </div>
   <div class="settings">
     <button id="gyro">Gyro Data</button>
-    <button id="invertColors"><img src="/assets/icon/baseline-invert_colors-24px.svg"></button>
-    <button id="colorize"><img src="/assets/icon/color-palette.svg"></button>
-    <button id="camera"><img src="/assets/icon/baseline-camera_alt-24px.svg"></button>
+    <button id="invertColors" (click)="invertColors()"><img src="/assets/icon/baseline-invert_colors-24px.svg"></button>
+    <button id="colorize" (click)="colorize()"><img src="/assets/icon/color-palette.svg"></button>
+    <button id="camera" (click)="saveScreenShot()"><img src="/assets/icon/baseline-camera_alt-24px.svg"></button>
     <button id="neu">generate</button>
   </div>
   <svg width="300" height="100" style="display: none;" id="svg">
