@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import shortId from 'shortid';
 
 import paper from 'paper';
@@ -21,7 +21,7 @@ export class HomePage {
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public navCtrl: NavController, gyro: Gyroscope, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, gyro: Gyroscope, private screenshot: Screenshot, public navParams: NavParams) {
     this.sign = this.navParams.get('svg');
   }
 
@@ -52,7 +52,10 @@ export class HomePage {
     imageMask.style.width = myCanvas.style.height;
 
     // Get Canvas then extract a base46 image
-    imageMask.src = myCanvas.toDataURL("image/jpeg", 0.5);
+
+    if(imageMask != null) {
+      imageMask.src = myCanvas.toDataURL("image/jpeg", 0.5);
+    }
 
     // Set imageMask width/height to fit current canvas
     //imageBackground.style.width = myCanvas.style.width;
@@ -124,6 +127,7 @@ export class HomePage {
       secondLetter.fontSize = '100px';
 
       paper.view.draw();
+
     };
 
     let newButton = document.getElementById("neu");
