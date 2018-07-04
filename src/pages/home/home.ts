@@ -17,10 +17,13 @@ const BLACK = '#000000';
 })
 
 export class HomePage {
+  sign: any;
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public navCtrl: NavController, gyro: Gyroscope, private screenshot: Screenshot) {}
+  constructor(public navCtrl: NavController, gyro: Gyroscope, public navParams: NavParams) {
+    this.sign = this.navParams.get('svg');
+  }
 
   background: string = WHITE;
   fontColor1: string = BLACK;
@@ -81,11 +84,16 @@ export class HomePage {
     // Create an empty project and a view for the canvas:
     paper.setup(myCanvas);
 
+    console.log(this.sign);
+    if(this.sign !== undefined) {
+      document.getElementById('svg').innerHTML = this.sign;
+    }
+
     let letters = paper.project.importSVG(document.getElementById('svg'));
     letters.visible = true;
     let firstLetter = letters.children.firstLetter;
     let secondLetter = letters.children.secondLetter;
-    firstLetter.position = [52, 70];
+    firstLetter.position = [52, 300];
     //console.log(firstLetter.children[0].intersects(secondLetter.children[0]));
 
     let generateSign = function () {
