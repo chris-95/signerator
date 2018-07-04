@@ -96,8 +96,8 @@ export class SigneratePage {
 
     this.gyro.watch(options).subscribe((orientation: GyroscopeOrientation) => {
       console.log("OrientationChanged: " + orientation.x, orientation.y, orientation.z);
-      let gyroDetect = (orientation.x > 2 || orientation.x < -2 || 
-        orientation.y > 2 || orientation.y < -2 || 
+      let gyroDetect = (orientation.x > 2 || orientation.x < -2 ||
+        orientation.y > 2 || orientation.y < -2 ||
         orientation.z > 2 || orientation.z < -2);
         console.log('DETECT: '+gyroDetect);
         console.log('PREVIEW: '+that.showPreview);
@@ -108,7 +108,7 @@ export class SigneratePage {
       }
     });
   }
-  
+
   onSlideChange() {
     document.getElementById('renderDiv').innerHTML = '';
     this.showPreview = (this.slideOneForm.valid && this.slideTwoForm.valid && this.slideThreeForm.valid);
@@ -163,7 +163,7 @@ export class SigneratePage {
         }
       }
 
-      let options = {svgAttrs: {id: 'previewSvg', width: 300}};
+      let options = {svgAttrs: {id: 'previewSvg', height: 100, width: 300}};
 
       let svg = makerjs.exporter.toSVG(textModel, options);
 
@@ -172,7 +172,10 @@ export class SigneratePage {
         let gPosition = svg.indexOf('<g');
         svg = svg.substring(gPosition, svg.length - 6);
         document.getElementById('previewSvg').innerHTML += svg;
-        document.getElementById('secondLetter').setAttribute('transform', 'translate(100,0)')
+        document.getElementById('previewSvg').removeAttribute('viewBox');
+        document.getElementById('secondLetter').setAttribute('transform', 'translate(100,0)');
+        document.getElementsByTagName('g')[0].style.fill = '#000';
+        document.getElementsByTagName('g')[1].style.fill = '#000';
       } else {
         svg = svg.replace('svgGroup', 'firstLetter');
         document.getElementById('renderDiv').innerHTML = svg;
