@@ -145,11 +145,16 @@ export class SigneratePage {
     else if(!this.slideTwoForm.valid){
       this.signupSlider.slideTo(1);
     }
+    else if(!this.slideThreeForm.valid){
+      this.signupSlider.slideTo(2);
+    }
     else {
       console.log("success!")
       console.log(this.slideOneForm.value);
       console.log(this.slideTwoForm.value);
       console.log(this.slideThreeForm.value);
+      this.navCtrl.setRoot(HomePage, {svg: document.getElementById('previewSvg').innerHTML});
+      this.showPreview = false;
     }
   }
 
@@ -174,7 +179,9 @@ export class SigneratePage {
         document.getElementById('previewSvg').innerHTML += svg;
         document.getElementById('previewSvg').removeAttribute('viewBox');
         document.getElementById('secondLetter').setAttribute('transform', 'translate(100,0)');
+        document.getElementsByTagName('g')[0].removeAttribute('fill');
         document.getElementsByTagName('g')[0].style.fill = '#000';
+        document.getElementsByTagName('g')[1].removeAttribute('fill');
         document.getElementsByTagName('g')[1].style.fill = '#000';
       } else {
         svg = svg.replace('svgGroup', 'firstLetter');

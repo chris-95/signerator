@@ -20,6 +20,9 @@ export class HomePage {
 
   sign: any;
   background: string = WHITE;
+  letters: any;
+  firstLetter: any;
+  secondLetter: any;
 
   firstLetterSign: any = {
     alpha: 0,
@@ -103,14 +106,16 @@ export class HomePage {
 
   // calculate translation and rotation of letters
   calcSign() {
+    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
+
     this.firstLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
     this.secondLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
 
-    this.firstLetterSign.x = Math.floor(Math.random() * (myCanvas.width - 0 + 1)) + 0;
-    this.firstLetterSign.y = Math.floor(Math.random() * (myCanvas.height - 0 + 1)) + 0;
+    this.firstLetterSign.x = Math.floor(Math.random() * ((myCanvas.width - 100) - 100 + 1)) + 100;
+    this.firstLetterSign.y = Math.floor(Math.random() * ((myCanvas.height - 100) - 100 + 1)) + 100;
 
-    this.secondLetterSign.x = Math.floor(Math.random() * (myCanvas.width - 0 + 1)) + 0;
-    this.secondLetterSign.y = Math.floor(Math.random() * (myCanvas.height - 0 + 1)) + 0;
+    this.secondLetterSign.x = Math.floor(Math.random() * ((myCanvas.width - 100) - 100 + 1)) + 100;
+    this.secondLetterSign.y = Math.floor(Math.random() * ((myCanvas.height - 100) - 100 + 1)) + 100;
   }
 
   // draw with paper js on canvas
@@ -118,19 +123,14 @@ export class HomePage {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
     myCanvas.style.background = this.background;
 
-    paper.project.activeLayer.removeChildren();
+    this.firstLetter.position = [this.firstLetterSign.x, this.firstLetterSign.y];
+    this.firstLetter.rotation = this.firstLetterSign.alpha;
+    this.secondLetter.position = [this.secondLetterSign.x, this.secondLetterSign.y];
+    this.secondLetter.rotation = this.secondLetterSign.alpha;
 
-    let firstLetter = new paper.PointText(new paper.Point(this.firstLetterSign.x,       this.firstLetterSign.y));
-    firstLetter.fillColor = this.firstLetterSign.color;
-    firstLetter.content = 'J';
-    firstLetter.rotate(this.firstLetterSign.alpha);
-    firstLetter.fontSize = '100px';
-
-    let secondLetter = new paper.PointText(new paper.Point(this.secondLetterSign.x,       this.secondLetterSign.y));
-    secondLetter.fillColor = this.secondLetterSign.color;
-    secondLetter.content = 'B';
-    secondLetter.rotate(this.secondLetterSign.alpha);
-    secondLetter.fontSize = '100px';
+    // console.log(this.firstLetter.children[0].intersects(this.secondLetter.children[0]));
+    if(this.firstLetter.children[0].getIntersections(this.secondLetter.children[0]).length < 2)
+      this.generateSign();
 
     paper.view.draw();
   }
@@ -149,11 +149,10 @@ export class HomePage {
       document.getElementById('svg').innerHTML = this.sign;
     }
 
-    let letters = paper.project.importSVG(document.getElementById('svg'));
-    letters.visible = true;
-    let firstLetter = letters.children.firstLetter;
-    let secondLetter = letters.children.secondLetter;
-    firstLetter.position = [52, 300];
-    // console.log(firstLetter.children[0].intersects(secondLetter.children[0]));
+    this.letters = paper.project.importSVG(document.getElementById('svg'));
+    this.letters.visible = true;
+    this.firstLetter = this.letters.children.firstLetter;
+    this.secondLetter = this.letters.children.secondLetter;
+    this.generateSign();
   }
 }
