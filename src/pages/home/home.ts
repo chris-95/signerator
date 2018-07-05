@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events, Platform } from 'ionic-angular';
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import shortId from 'shortid';
 
 import paper from 'paper';
 
-import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { Screenshot } from '@ionic-native/screenshot';
 import {async} from "@angular/core/testing";
 
@@ -23,6 +23,8 @@ export class HomePage {
   letters: any;
   firstLetter: any;
   secondLetter: any;
+  canvasWidth: any;
+  canvasHeight: any;
 
   firstLetterSign: any = {
     alpha: 0,
@@ -40,11 +42,18 @@ export class HomePage {
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public navCtrl: NavController, gyro: Gyroscope, private screenshot: Screenshot, public navParams: NavParams) {
+  constructor(public platform: Platform, public navCtrl: NavController, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events) {
     this.sign = this.navParams.get('svg');
     this.calcSign = this.calcSign.bind(this);
     this.drawSign = this.drawSign.bind(this);
     this.generateSign = this.generateSign.bind(this);
+    this.canvasWidth = window.innerWidth - 32;
+    this.canvasHeight = window.innerHeight * 0.7;
+
+    events.subscribe('functionCall:gyroscopeDetection', (text) => {
+      console.log('TEXT: '+text);
+      this.generateSign();
+    });
   }
 
   // calculate initial transformation of letters
@@ -111,11 +120,11 @@ export class HomePage {
     this.firstLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
     this.secondLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
 
-    this.firstLetterSign.x = Math.floor(Math.random() * ((myCanvas.width - 100) - 100 + 1)) + 100;
-    this.firstLetterSign.y = Math.floor(Math.random() * ((myCanvas.height - 100) - 100 + 1)) + 100;
+    this.firstLetterSign.x = Math.floor(Math.random() * ((this.canvasWidth - 100) - 100 + 1)) + 100;
+    this.firstLetterSign.y = Math.floor(Math.random() * ((this.canvasHeight - 100) - 100 + 1)) + 100;
 
-    this.secondLetterSign.x = Math.floor(Math.random() * ((myCanvas.width - 100) - 100 + 1)) + 100;
-    this.secondLetterSign.y = Math.floor(Math.random() * ((myCanvas.height - 100) - 100 + 1)) + 100;
+    this.secondLetterSign.x = Math.floor(Math.random() * ((this.canvasWidth - 100) - 100 + 1)) + 100;
+    this.secondLetterSign.y = Math.floor(Math.random() * ((this.canvasHeight - 100) - 100 + 1)) + 100;
   }
 
   // draw with paper js on canvas
@@ -138,8 +147,8 @@ export class HomePage {
   // canvas & paper setup
   ngAfterViewInit() {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    myCanvas.width = window.innerWidth - 48;
-    myCanvas.height = window.innerHeight * .7;
+    myCanvas.width = this.canvasWidth
+    myCanvas.height = this.canvasHeight;
     myCanvas.style.background = this.background;
 
     // Create an empty project and a view for the canvas:

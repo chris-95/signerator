@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
+import {Nav, Platform, Events} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 
 import { HomePage } from '../pages/home/home';
 import { SigneratePage } from "../pages/signerate/signerate";
@@ -16,7 +17,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public gyro: Gyroscope, public events: Events) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -32,6 +33,27 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      let options: GyroscopeOptions = {
+        frequency: 1000
+      };
+  
+      this.gyro.getCurrent(options).then((orientation: GyroscopeOrientation) => {
+        console.log("OrientationStart: " + orientation.x, orientation.y, orientation.z);
+      })
+      .catch((e) => console.log(e));
+  
+      this.gyro.watch(options).subscribe((orientation: GyroscopeOrientation) => {
+        console.log("INIT OrientationChanged: " + orientation.x, orientation.y, orientation.z);
+        let gyroDetect = (orientation.x > 2 || orientation.x < -2 ||
+          orientation.y > 2 || orientation.y < -2 ||
+          orientation.z > 2 || orientation.z < -2);
+          console.log('DETECT: '+gyroDetect);
+        if(gyroDetect) {
+          console.log('INIT CHANGETOHOME');
+          this.events.publish('functionCall:gyroscopeDetection', 'GenerateSign');
+        }
+      });
     });
   }
 
