@@ -37,12 +37,12 @@ export class MyApp {
       let options: GyroscopeOptions = {
         frequency: 1000
       };
-  
+
       this.gyro.getCurrent(options).then((orientation: GyroscopeOrientation) => {
         console.log("OrientationStart: " + orientation.x, orientation.y, orientation.z);
       })
       .catch((e) => console.log(e));
-  
+
       this.gyro.watch(options).subscribe((orientation: GyroscopeOrientation) => {
         console.log("INIT OrientationChanged: " + orientation.x, orientation.y, orientation.z);
         let gyroDetect = (orientation.x > 2 || orientation.x < -2 ||
