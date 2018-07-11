@@ -88,6 +88,14 @@ export class HomePage {
   // signerate logo with button // TODO use gyroscope
   generateSign() {
     this.calcSign();
+
+    this.firstLetter.position = [this.firstLetterSign.x, this.firstLetterSign.y];
+    this.firstLetter.rotation = this.firstLetterSign.alpha;
+    this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.secondLetter.position = [this.secondLetterSign.x, this.secondLetterSign.y];
+    this.secondLetter.rotation = this.secondLetterSign.alpha;
+    this.secondLetter.fillColor = this.secondLetterSign.color;
+
     this.drawSign();
   };
 
@@ -96,6 +104,8 @@ export class HomePage {
    this.background = (this.background === BLACK) ? WHITE : BLACK;
    this.firstLetterSign.color = (this.background === BLACK) ? WHITE : BLACK;
     this.secondLetterSign.color = (this.background === BLACK) ? WHITE : BLACK;
+    this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.secondLetter.fillColor = this.secondLetterSign.color;
    this.drawSign();
   }
 
@@ -103,6 +113,9 @@ export class HomePage {
   colorize() {
     this.firstLetterSign.color = "rgba(" + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + ", 0.5)";
     this.secondLetterSign.color = "rgba(" + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + ", 0.5)";
+    this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.secondLetter.fillColor = this.secondLetterSign.color;
+
     this.drawSign();
   }
 
@@ -156,11 +169,6 @@ export class HomePage {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
     myCanvas.style.background = this.background;
 
-    this.firstLetter.position = [this.firstLetterSign.x, this.firstLetterSign.y];
-    this.firstLetter.rotation = this.firstLetterSign.alpha;
-    this.secondLetter.position = [this.secondLetterSign.x, this.secondLetterSign.y];
-    this.secondLetter.rotation = this.secondLetterSign.alpha;
-
     // console.log(this.firstLetter.children[0].intersects(this.secondLetter.children[0]));
     if(this.firstLetter.children[0].getIntersections(this.secondLetter.children[0]).length < 2)
       this.generateSign();
@@ -171,7 +179,7 @@ export class HomePage {
   // canvas & paper setup
   ngAfterViewInit() {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    myCanvas.width = this.canvasWidth
+    myCanvas.width = this.canvasWidth;
     myCanvas.height = this.canvasHeight;
     myCanvas.style.background = this.background;
 
