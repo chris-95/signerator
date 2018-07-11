@@ -6,6 +6,7 @@ import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native
 
 import { HomePage } from '../pages/home/home';
 import { SigneratePage } from "../pages/signerate/signerate";
+import { TutorialPage } from '../pages/tutorial/tutorial';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       {title: 'Home', component: HomePage},
-      {title: 'Signerate', component: SigneratePage}
+      {title: 'Signerate', component: SigneratePage},
+      {title: 'Tutorial', component: TutorialPage}
     ];
   }
 

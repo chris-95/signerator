@@ -9,12 +9,14 @@ import { Screenshot } from '@ionic-native/screenshot';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SigneratePage } from "../pages/signerate/signerate";
+import { TutorialPage } from '../pages/tutorial/tutorial';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    SigneratePage
+    SigneratePage,
+    TutorialPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { SigneratePage } from "../pages/signerate/signerate";
   entryComponents: [
     MyApp,
     HomePage,
-    SigneratePage
+    SigneratePage,
+    TutorialPage
   ],
   providers: [
     StatusBar,
