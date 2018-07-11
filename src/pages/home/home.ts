@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
-import shortId from 'shortid';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+import { Toast } from '@ionic-native/toast';
 
 import paper from 'paper';
 
-import { Screenshot } from '@ionic-native/screenshot';
-import {async} from "@angular/core/testing";
 
 const WHITE = '#ffffff';
 const BLACK = '#000000';
@@ -21,9 +19,11 @@ export class HomePage {
 
   sign: any;
   background: string = WHITE;
+  backgroundRect: any;
   letters: any;
   firstLetter: any;
   secondLetter: any;
+
   canvasWidth: any;
   canvasHeight: any;
 
@@ -43,7 +43,16 @@ export class HomePage {
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public platform: Platform, public navCtrl: NavController, private base64ToGallery: Base64ToGallery, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events) {
+  constructor(
+    public platform: Platform,
+    public navCtrl: NavController,
+    private toast: Toast,
+    private base64ToGallery: Base64ToGallery,
+    public navParams: NavParams,
+    public gyro: Gyroscope,
+    public events: Events
+  ) {
+
     this.sign = this.navParams.get('svg');
     this.calcSign = this.calcSign.bind(this);
     this.drawSign = this.drawSign.bind(this);
@@ -120,41 +129,26 @@ export class HomePage {
     this.drawSign();
   }
 
-  // TODO FIXME :D
+  //save generated image to gallery
   saveScreenShot() {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
 
-    /* let newlink = <HTMLAnchorElement> document.createElement('a');
-    newlink.setAttribute('href', '#');
-    newlink.setAttribute('download', myCanvas.toDataURL("image/jpeg", 0.5).toString());
-    newlink.click(); */
-
-    console.log(myCanvas.toDataURL("image/jpeg", 0.5));
-
     this.base64ToGallery.base64ToGallery(myCanvas.toDataURL(), { prefix: 'img_', mediaScanner: true }).then(
-      res => console.log('Saved image to gallery ', res),
-      err => console.log('Error saving image to gallery ', err)
+      res =>  this.toast.show(`Bild gespeichert`, '5000', 'center').subscribe(
+          toast => {
+            console.log(toast);
+          }
+        ),
+      err => this.toast.show(`Bild konnte nicht gespeichert werden`, '5000', 'center').subscribe(
+        toast => {
+          console.log(toast);
+        }
+      )
     );
-
-    // Set imageMask width/height to fit current canvas
-    //imageBackground.style.width = myCanvas.style.width;
-    //imageBackground.style.width = myCanvas.style.height;
-    //imageBackground.style.background = BLACK; // TODO use current property
-
-    // Hide canvas and show image mask instead and after taking the screenshot, hide mask and show canvas again
-    // myCanvas.style.visibility = 'hidden';
-    // imageMask.style.display = 'block';
-
-    // this.screenshot.save('jpg', 80, shortId.generate()+'.jpg');
-
-    // myCanvas.style.visibility = 'visible';
-    // imageMask.style.display = 'none';
   }
 
   // calculate translation and rotation of letters
   calcSign() {
-    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-
     this.firstLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
     this.secondLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
 
@@ -167,10 +161,8 @@ export class HomePage {
 
   // draw with paper js on canvas
   drawSign() {
-    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    myCanvas.style.background = this.background;
+    this.backgroundRect.fillColor = this.background;
 
-    // console.log(this.firstLetter.children[0].intersects(this.secondLetter.children[0]));
     if(this.firstLetter.children[0].getIntersections(this.secondLetter.children[0]).length < 2)
       this.generateSign();
 
@@ -182,7 +174,6 @@ export class HomePage {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
     myCanvas.width = this.canvasWidth;
     myCanvas.height = this.canvasHeight;
-    myCanvas.style.background = this.background;
 
     // Create an empty project and a view for the canvas:
     paper.setup(myCanvas);
@@ -190,6 +181,15 @@ export class HomePage {
     if(this.sign !== undefined) {
       document.getElementById('svg').innerHTML = this.sign;
     }
+
+    this.backgroundRect = new paper.Path.Rectangle({
+      point: [0, 0],
+      size: [paper.view.size.width, paper.view.size.height],
+      selected: true
+    });
+
+    this.backgroundRect.sendToBack();
+    this.backgroundRect.fillColor = this.background;
 
     this.letters = paper.project.importSVG(document.getElementById('svg'));
     this.letters.visible = true;
