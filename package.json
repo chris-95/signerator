@@ -21,6 +21,7 @@
     "@angular/http": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
+    "@ionic-native/base64-to-gallery": "^4.9.1",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/gyroscope": "^4.8.0",
     "@ionic-native/screenshot": "^4.7.0",
@@ -31,6 +32,7 @@
     "bezier-js": "^2.2.8",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "cordova-android": "7.0.0",
+    "cordova-base64-to-gallery": "^4.1.3",
     "cordova-ios": "4.5.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-gyroscope": "^0.1.4",
@@ -62,7 +64,8 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "com.darktalker.cordova.screenshot": {},
-      "cordova-plugin-gyroscope": {}
+      "cordova-plugin-gyroscope": {},
+      "cordova-base64-to-gallery": {}
     },
     "platforms": [
       "ios",

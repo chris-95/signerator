@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Gyroscope } from '@ionic-native/gyroscope';
 import { Screenshot } from '@ionic-native/screenshot';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -31,6 +32,7 @@ import { SigneratePage } from "../pages/signerate/signerate";
     SplashScreen,
     Gyroscope,
     Screenshot,
+    Base64ToGallery,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import shortId from 'shortid';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 
 import paper from 'paper';
 
@@ -42,7 +43,7 @@ export class HomePage {
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public platform: Platform, public navCtrl: NavController, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events) {
+  constructor(public platform: Platform, public navCtrl: NavController, private base64ToGallery: Base64ToGallery, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events) {
     this.sign = this.navParams.get('svg');
     this.calcSign = this.calcSign.bind(this);
     this.drawSign = this.drawSign.bind(this);
@@ -121,19 +122,19 @@ export class HomePage {
 
   // TODO FIXME :D
   saveScreenShot() {
-    const imageMask = <HTMLMediaElement> document.getElementById("imageMask");
-    const imageBackground = document.getElementsByClassName("canvas-container")[0];
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
 
-    // Set imageMask width/height to fit current canvas
-    imageMask.style.width = myCanvas.style.width;
-    imageMask.style.height = myCanvas.style.height;
+    /* let newlink = <HTMLAnchorElement> document.createElement('a');
+    newlink.setAttribute('href', '#');
+    newlink.setAttribute('download', myCanvas.toDataURL("image/jpeg", 0.5).toString());
+    newlink.click(); */
 
-    // Get Canvas then extract a base46 image
+    console.log(myCanvas.toDataURL("image/jpeg", 0.5));
 
-    if(!!imageMask) {
-      imageMask.src = myCanvas.toDataURL("image/jpeg", 0.5);
-    }
+    this.base64ToGallery.base64ToGallery(myCanvas.toDataURL(), { prefix: 'img_', mediaScanner: true }).then(
+      res => console.log('Saved image to gallery ', res),
+      err => console.log('Error saving image to gallery ', err)
+    );
 
     // Set imageMask width/height to fit current canvas
     //imageBackground.style.width = myCanvas.style.width;
@@ -142,9 +143,9 @@ export class HomePage {
 
     // Hide canvas and show image mask instead and after taking the screenshot, hide mask and show canvas again
     // myCanvas.style.visibility = 'hidden';
-    imageMask.style.display = 'block';
+    // imageMask.style.display = 'block';
 
-    this.screenshot.save('jpg', 80, shortId.generate()+'.jpg');
+    // this.screenshot.save('jpg', 80, shortId.generate()+'.jpg');
 
     // myCanvas.style.visibility = 'visible';
     // imageMask.style.display = 'none';
