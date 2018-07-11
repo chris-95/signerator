@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Renderer, ViewChild} from '@angular/core';
 import { NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import shortId from 'shortid';
@@ -17,6 +17,9 @@ const BLACK = '#000000';
 })
 
 export class HomePage {
+  @ViewChild('myCanvas') canvas: any;
+
+  canvasElement: any;
 
   sign: any;
   background: string = WHITE;
@@ -42,7 +45,7 @@ export class HomePage {
 
   // myCanvas: node = document.getElementById("myCanvas");
 
-  constructor(public platform: Platform, public navCtrl: NavController, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events) {
+  constructor(public platform: Platform, public navCtrl: NavController, private screenshot: Screenshot, public navParams: NavParams, public gyro: Gyroscope, public events: Events, public renderer: Renderer) {
     this.sign = this.navParams.get('svg');
     this.calcSign = this.calcSign.bind(this);
     this.drawSign = this.drawSign.bind(this);
@@ -178,13 +181,14 @@ export class HomePage {
 
   // canvas & paper setup
   ngAfterViewInit() {
-    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    myCanvas.width = this.canvasWidth;
-    myCanvas.height = this.canvasHeight;
-    myCanvas.style.background = this.background;
+    console.log('AfterViewInit Home');
 
-    // Create an empty project and a view for the canvas:
-    paper.setup(myCanvas);
+    this.canvasElement = this.canvas.nativeElement;
+    this.renderer.setElementAttribute(this.canvasElement, 'width', this.canvasWidth);
+    this.renderer.setElementAttribute(this.canvasElement, 'height', this.canvasHeight);
+    this.renderer.setElementAttribute(this.canvasElement, 'style', 'background: '+this.background);
+
+    paper.setup(this.canvasElement);
 
     if(this.sign !== undefined) {
       document.getElementById('svg').innerHTML = this.sign;
