@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NavController} from "ionic-angular";
+import {NavController, Platform} from "ionic-angular";
 import { HomePage } from '../home/home';
 
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
@@ -70,7 +70,7 @@ export class SigneratePage {
   submitAttempt: boolean = false;
   showPreview: boolean;
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public gyro: Gyroscope) {
+  constructor(public platform: Platform, public navCtrl: NavController, public formBuilder: FormBuilder, public gyro: Gyroscope) {
     let that = this;
     this.slideOneForm = formBuilder.group({
       firstLetter: ['', Validators.compose([Validators.maxLength(1), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -85,26 +85,31 @@ export class SigneratePage {
       url: ['', Validators.required]
     });
 
-    let options: GyroscopeOptions = {
-      frequency: 1000
-    };
 
-    this.gyro.getCurrent(options).then((orientation: GyroscopeOrientation) => {
-      console.log("OrientationStart: " + orientation.x, orientation.y, orientation.z);
-    })
-    .catch((e) => console.log(e));
+    this.platform.ready().then((readySource) => {
+      if(readySource === 'cordova') {
+        let options: GyroscopeOptions = {
+            frequency: 1000
+          };
 
-    this.gyro.watch(options).subscribe((orientation: GyroscopeOrientation) => {
-      console.log("OrientationChanged: " + orientation.x, orientation.y, orientation.z);
-      let gyroDetect = (orientation.x > 2 || orientation.x < -2 ||
-        orientation.y > 2 || orientation.y < -2 ||
-        orientation.z > 2 || orientation.z < -2);
-        console.log('DETECT: '+gyroDetect);
-        console.log('PREVIEW: '+that.showPreview);
-      if(that.showPreview && gyroDetect) {
-        console.log('CHANGETOHOME');
-        that.navCtrl.setRoot(HomePage, {svg: document.getElementById('previewSvg').innerHTML});
-        that.showPreview = false;
+          this.gyro.getCurrent(options).then((orientation: GyroscopeOrientation) => {
+            console.log("OrientationStart: " + orientation.x, orientation.y, orientation.z);
+          })
+          .catch((e) => console.log(e));
+
+          this.gyro.watch(options).subscribe((orientation: GyroscopeOrientation) => {
+            console.log("OrientationChanged: " + orientation.x, orientation.y, orientation.z);
+            let gyroDetect = (orientation.x > 2 || orientation.x < -2 ||
+              orientation.y > 2 || orientation.y < -2 ||
+              orientation.z > 2 || orientation.z < -2);
+              console.log('DETECT: '+gyroDetect);
+              console.log('PREVIEW: '+that.showPreview);
+            if(that.showPreview && gyroDetect) {
+              console.log('CHANGETOHOME');
+              that.navCtrl.setRoot(HomePage, {svg: document.getElementById('previewSvg').innerHTML});
+              that.showPreview = false;
+            }
+          });
       }
     });
   }
