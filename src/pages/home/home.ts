@@ -21,14 +21,14 @@ export class HomePage {
   sign: any;
   background: string = WHITE;
 
-  firstLetterSign: object = {
+  firstLetterSign: any = {
     alpha: 0,
     x: 0,
     y: 0,
     color: BLACK
   };
 
-  secondLetterSign: object = {
+  secondLetterSign: any = {
     alpha: 0,
     x: 0,
     y: 0,
@@ -72,11 +72,11 @@ export class HomePage {
 
   // TODO FIXME :D
   saveScreenShot() {
-    const imageMask = document.getElementById("imageMask");
+    const imageMask = <HTMLMediaElement> document.getElementById("imageMask");
     const imageBackground = document.getElementsByClassName("canvas-container")[0];
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
 
-    // Set imageMask width/height to fit current canvas
+    // Set imageMask width/height to fit current canvass
     imageMask.style.width = myCanvas.style.width;
     imageMask.style.width = myCanvas.style.height;
 
@@ -103,6 +103,8 @@ export class HomePage {
 
   // calculate translation and rotation of letters
   calcSign() {
+    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
+
     this.firstLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
     this.secondLetterSign.alpha = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
 
