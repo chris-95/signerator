@@ -13,52 +13,49 @@
   <ion-slides #signupSlider pager (ionSlideDidChange)="onSlideChange()">
 
     <ion-slide>
-      <h1>Fill out your initials!</h1>
-
-      <ion-list no-lines>
+      <h1>Gib deine Initialien ein!</h1>
 
         <form [formGroup]="slideOneForm">
+          <ion-list>
+            <ion-item>
+              <ion-label floating>Erster Buchstabe</ion-label>
+              <ion-input formControlName="firstLetter" type="text" [class.invalid]="!slideOneForm.controls.firstLetter.valid && (slideOneForm.controls.firstLetter.dirty || submitAttempt)"></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-label floating>1st Letter</ion-label>
-            <ion-input formControlName="firstLetter" type="text" [class.invalid]="!slideOneForm.controls.firstLetter.valid && (slideOneForm.controls.firstLetter.dirty || submitAttempt)"></ion-input>
-          </ion-item>
+            <ion-item *ngIf="!slideOneForm.controls.firstLetter.valid  && (slideOneForm.controls.firstLetter.dirty || submitAttempt)">
+              <p>Bitte einen Buchstaben eingeben.</p>
+            </ion-item>
 
-          <ion-item *ngIf="!slideOneForm.controls.firstLetter.valid  && (slideOneForm.controls.firstLetter.dirty || submitAttempt)">
-            <p>Please enter a letter.</p>
-          </ion-item>
+            <ion-item>
+              <ion-label floating>Zweiter Buchstabe</ion-label>
+              <ion-input formControlName="secondLetter" type="text" [class.invalid]="!slideOneForm.controls.secondLetter.valid && (slideOneForm.controls.secondLetter.dirty || submitAttempt)"></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-label floating>2nd Letter</ion-label>
-            <ion-input formControlName="secondLetter" type="text" [class.invalid]="!slideOneForm.controls.secondLetter.valid && (slideOneForm.controls.secondLetter.dirty || submitAttempt)"></ion-input>
-          </ion-item>
-
-          <ion-item *ngIf="!slideOneForm.controls.secondLetter.valid  && (slideOneForm.controls.secondLetter.dirty || submitAttempt)">
-            <p>Please enter a letter.</p>
-          </ion-item>
-
+            <ion-item *ngIf="!slideOneForm.controls.secondLetter.valid  && (slideOneForm.controls.secondLetter.dirty || submitAttempt)">
+              <p>Bitte einen Buchstaben eingeben.</p>
+            </ion-item>
+          </ion-list>
         </form>
-
-      </ion-list>
-
+      <button ion-button color="primary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
-      <h1>Choose a font!</h1>
+      <h1>Wähle eine Schrift!</h1>
 
         <form [formGroup]="slideTwoForm">
           <ion-list no-lines radio-group formControlName="font" [(ngModel)]="selectedFont">
             <ion-item *ngFor="let font of fonts">
               <ion-label>{{font.name}}</ion-label>
               <ion-radio value="{{font.name}}"></ion-radio>
+              <button item-end class="info-button" (click)="openModal(font.name, font.info)"><ion-icon name="information"></ion-icon></button>
             </ion-item>
           </ion-list>
         </form>
-
+      <button ion-button color="primary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
-      <h1>Choose a font style!</h1>
+      <h1>Konfiguriere deine Schrift!</h1>
 
 
         <form [formGroup]="slideThreeForm">
@@ -68,23 +65,27 @@
                 <ion-item *ngIf="font.name == selectedFont">
                   <ion-label>{{style.type}}</ion-label>
                   <ion-radio [disabled]="style.url === ''" value="{{style.url}}"></ion-radio>
+                  <button item-end class="info-button" (click)="openModal(style.type, style.info)"><ion-icon name="information"></ion-icon></button>
                 </ion-item>
               </div>
             </div>
-      </ion-list>
+          </ion-list>
         </form>
-
-
-      <!--<button ion-button full color="primary" (click)="save()">Create Account!</button>-->
+      <button ion-button color="primary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
       <ion-list>
           <ion-item>
             <div id="renderDiv"></div>
-            <h2 *ngIf="!showPreview">Please fill out everything!</h2>
+            <h2 *ngIf="!showPreview">Bitte alles ausfüllen!</h2>
           </ion-item>
       </ion-list>
+      <p>
+        <ion-icon name="compass"></ion-icon>
+        Schütteln Sie Ihr Smartphone um das Logo zu generieren.
+      </p>
+      <button ion-button color="primary" (click)="save()">Generiere Logo</button>
     </ion-slide>
   </ion-slides>
 </ion-content>
