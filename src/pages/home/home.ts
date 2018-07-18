@@ -105,9 +105,11 @@ export class HomePage {
     this.firstLetter.position = [this.firstLetterSign.x, this.firstLetterSign.y];
     this.firstLetter.rotation = this.firstLetterSign.alpha;
     this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.firstLetter.strokeColor = this.firstLetterSign.color;
     this.secondLetter.position = [this.secondLetterSign.x, this.secondLetterSign.y];
     this.secondLetter.rotation = this.secondLetterSign.alpha;
     this.secondLetter.fillColor = this.secondLetterSign.color;
+    this.secondLetter.strokeColor = this.secondLetterSign.color;
 
     this.drawSign();
   };
@@ -118,7 +120,9 @@ export class HomePage {
    this.firstLetterSign.color = (this.background === BLACK) ? WHITE : BLACK;
     this.secondLetterSign.color = (this.background === BLACK) ? WHITE : BLACK;
     this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.firstLetter.strokeColor = this.firstLetterSign.color;
     this.secondLetter.fillColor = this.secondLetterSign.color;
+    this.secondLetter.strokeColor = this.secondLetterSign.color;
    this.drawSign();
   }
 
@@ -127,7 +131,9 @@ export class HomePage {
     this.firstLetterSign.color = "rgba(" + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + ", 0.5)";
     this.secondLetterSign.color = "rgba(" + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + "," + (Math.random() > 0.5 ? 255 : 0) + ", 0.5)";
     this.firstLetter.fillColor = this.firstLetterSign.color;
+    this.firstLetter.strokeColor = this.firstLetterSign.color;
     this.secondLetter.fillColor = this.secondLetterSign.color;
+    this.secondLetter.strokeColor = this.secondLetterSign.color;
 
     this.drawSign();
   }
