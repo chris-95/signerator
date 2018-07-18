@@ -39,7 +39,7 @@ export class MyApp {
       this.platform.ready().then((readySource) => {
         if(readySource === 'cordova') {
           let options: GyroscopeOptions = {
-            frequency: 1000
+            frequency: 500
           };
 
           this.gyro.getCurrent(options).then((orientation: GyroscopeOrientation) => {

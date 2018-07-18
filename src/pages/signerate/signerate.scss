@@ -1,5 +1,9 @@
 page-signerate {
 
+  .slide-zoom {
+    position: fixed;
+  }
+
   h2 {
     text-align: center;
     color: color($colors, danger);
