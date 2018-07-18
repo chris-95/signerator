@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Gyroscope } from '@ionic-native/gyroscope';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 import { Toast } from '@ionic-native/toast';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -21,7 +22,8 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AccordionModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

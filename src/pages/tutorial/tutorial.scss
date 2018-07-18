@@ -1,3 +1,159 @@
 page-tutorial {
 
+  h1 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+
+    li {
+      flex-basis: 50%;
+      list-style: none;
+      padding: 15px;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+
+      &:nth-child(2) {
+        img {
+          width: 55px;
+          height: 55px;
+        }
+      }
+
+      p {
+        text-align: center;
+      }
+    }
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .panel-group > .panel {
+    border-top: 1px solid;
+
+    &:last-child {
+      border-bottom: 1px solid;
+    }
+  }
+
+  .panel-group {
+    border: none;
+
+    > .panel {
+      &::before {
+        content: "";
+        z-index: 10;
+        width: 20px;
+        height: 20px;
+        display: block;
+        background: url("../../assets/icon/add.svg");
+        transform: rotate(0deg);
+        transition: transform .3s;
+        position: absolute;
+        margin: 15px;
+      }
+    }
+
+    > .panel-open {
+      &::before {
+        content: "";
+        z-index: 10;
+        width: 20px;
+        height: 20px;
+        display: block;
+        background: url("../../assets/icon/add.svg");
+        transform: rotate(45deg);
+        transition: transform .3s;
+        position: absolute;
+        margin: 15px;
+      }
+    }
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+    background: white;
+    position: relative;
+    font-size: 20px;
+    color: color($colors, secondary);
+  }
+
+  .signerate {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    img {
+      min-width: 60px;
+      min-height: 60px;
+      width: 100px;
+      height: 100px;
+    }
+
+    li {
+      list-style: none;
+      position: relative;
+      margin-bottom: 40px;
+
+      &::before {
+        content: "1";
+        z-index: 10;
+        font-size: 50px;
+        color: color($colors, secondary);
+        display: block;
+        position: absolute;
+        left: -40px;
+        top: -10px;
+      }
+
+      &:first-of-type::before {
+        content: "1";
+      }
+
+      &:nth-of-type(2)::before {
+        content: "2";
+      }
+
+      &:nth-of-type(3)::before {
+        content: "3";
+      }
+
+      &:nth-of-type(4)::before {
+        content: "4";
+      }
+
+      &:nth-of-type(5)::before {
+        content: "5";
+      }
+    }
+  }
+
+  .shake {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: 30px;
+
+    img {
+      margin: 20px;
+    }
+
+    span {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
