@@ -133,7 +133,7 @@ export class HomePage {
   saveScreenShot() {
     let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
 
-    this.base64ToGallery.base64ToGallery(myCanvas.toDataURL(), { prefix: 'img_', mediaScanner: true }).then(
+    this.base64ToGallery.base64ToGallery(myCanvas.toDataURL(), { prefix: '_img', mediaScanner: true }).then(
       res =>  this.toast.show(`Bild gespeichert`, '5000', 'center').subscribe(
           toast => {
             console.log(toast);
