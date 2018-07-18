@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NavController, Platform} from "ionic-angular";
+import {AlertController, NavController, Platform} from "ionic-angular";
 import { HomePage } from '../home/home';
 
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
@@ -26,20 +26,24 @@ export class SigneratePage {
     {
       'id': 0,
       'name': 'Standard',
+      'info': 'Lorem ipsum for Standard Font',
       'styles': [
         {
           'id': 0,
           'type': 'light',
+          'info': 'Lorem ipsum for Standard light font',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5vAw.ttf'
         },
         {
           'id': 1,
           'type': 'regular',
+          'info': 'Lorem ipsum for Standard regular font',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Me5Q.ttf'
         },
         {
           'id': 2,
           'type': 'bold',
+          'info': 'Lorem ipsum for Standard bold font',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9vAw.ttf'
         }
       ]
@@ -47,20 +51,24 @@ export class SigneratePage {
     {
       'id': 1,
       'name': 'Serif',
+      'info': 'Lorem ipsum for Serif font',
       'styles': [
         {
           'id': 0,
           'type': 'light',
+          'info': 'Lorem ipsum for Serif light font',
           'url': ''
         },
         {
           'id': 1,
           'type': 'regular',
+          'info': 'Lorem ipsum for Serif regular font',
           'url': 'http://fonts.gstatic.com/s/alegreya/v10/4UaBrEBBsBhlBjvfkRLm.ttf'
         },
         {
           'id': 2,
           'type': 'bold',
+          'info': 'Lorem ipsum for Serif bold font',
           'url': 'http://fonts.gstatic.com/s/alegreya/v10/4UaGrEBBsBhlBjvfkSoS5I3J.ttf'
         }
       ]
@@ -70,7 +78,7 @@ export class SigneratePage {
   submitAttempt: boolean = false;
   showPreview: boolean;
 
-  constructor(public platform: Platform, public navCtrl: NavController, public formBuilder: FormBuilder, public gyro: Gyroscope) {
+  constructor(public platform: Platform, public navCtrl: NavController, public formBuilder: FormBuilder, public gyro: Gyroscope, public alertController: AlertController) {
     let that = this;
     this.slideOneForm = formBuilder.group({
       firstLetter: ['', Validators.compose([Validators.maxLength(1), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -87,6 +95,7 @@ export class SigneratePage {
 
 
     this.platform.ready().then((readySource) => {
+      this.signupSlider.onlyExternal = true;
       if(readySource === 'cordova') {
         let options: GyroscopeOptions = {
             frequency: 1000
@@ -139,6 +148,15 @@ export class SigneratePage {
 
   prev(){
     this.signupSlider.slidePrev();
+  }
+
+  openModal(title, info) {
+    let alert = this.alertController.create({
+      title: title,
+      subTitle: info,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   save(){
