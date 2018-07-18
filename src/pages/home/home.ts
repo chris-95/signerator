@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Renderer, ViewChild} from '@angular/core';
 import { NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
@@ -16,6 +16,9 @@ const BLACK = '#000000';
 })
 
 export class HomePage {
+  @ViewChild('myCanvas') canvas: any;
+
+  canvasElement: any;
 
   sign: any;
   background: string = WHITE;
@@ -50,9 +53,9 @@ export class HomePage {
     private base64ToGallery: Base64ToGallery,
     public navParams: NavParams,
     public gyro: Gyroscope,
-    public events: Events
+    public events: Events,
+    public renderer: Renderer
   ) {
-
     this.sign = this.navParams.get('svg');
     this.calcSign = this.calcSign.bind(this);
     this.drawSign = this.drawSign.bind(this);
@@ -171,12 +174,12 @@ export class HomePage {
 
   // canvas & paper setup
   ngAfterViewInit() {
-    let myCanvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    myCanvas.width = this.canvasWidth;
-    myCanvas.height = this.canvasHeight;
+    this.canvasElement = this.canvas.nativeElement;
+    this.renderer.setElementAttribute(this.canvasElement, 'width', this.canvasWidth);
+    this.renderer.setElementAttribute(this.canvasElement, 'height', this.canvasHeight);
+    this.renderer.setElementAttribute(this.canvasElement, 'style', 'background: '+this.background);
 
-    // Create an empty project and a view for the canvas:
-    paper.setup(myCanvas);
+    paper.setup(this.canvasElement);
 
     if(this.sign !== undefined) {
       document.getElementById('svg').innerHTML = this.sign;
@@ -185,7 +188,6 @@ export class HomePage {
     this.backgroundRect = new paper.Path.Rectangle({
       point: [0, 0],
       size: [paper.view.size.width, paper.view.size.height],
-      selected: true
     });
 
     this.backgroundRect.sendToBack();
