@@ -26,24 +26,24 @@ export class SigneratePage {
     {
       'id': 0,
       'name': 'Standard',
-      'info': 'Lorem ipsum for Standard Font',
+      'info': 'Wirkt sachlich-nüchtern und zeitlos. Ist sehr gut lesbar.',
       'styles': [
         {
           'id': 0,
           'type': 'light',
-          'info': 'Lorem ipsum for Standard light font',
+          'info': 'Dünne und filigranere Schriftstärke. Wirkt etwas sanfter.',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5vAw.ttf'
         },
         {
           'id': 1,
           'type': 'regular',
-          'info': 'Lorem ipsum for Standard regular font',
+          'info': 'Normale Schriftstärke. Keine Besonderheit.',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Me5Q.ttf'
         },
         {
           'id': 2,
           'type': 'bold',
-          'info': 'Lorem ipsum for Standard bold font',
+          'info': 'Dicke Schriftstärke. Wirkt noch masiver auf den Betrachter',
           'url': 'http://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9vAw.ttf'
         }
       ]
@@ -51,25 +51,50 @@ export class SigneratePage {
     {
       'id': 1,
       'name': 'Serif',
-      'info': 'Lorem ipsum for Serif font',
+      'info': 'Wirkt elegant und konservativ. Sehr gute Lesbarkeit beim Printmedium.',
       'styles': [
         {
           'id': 0,
           'type': 'light',
-          'info': 'Lorem ipsum for Serif light font',
+          'info': 'Leider keine Schrift vorhanden',
           'url': ''
         },
         {
           'id': 1,
           'type': 'regular',
-          'info': 'Lorem ipsum for Serif regular font',
+          'info': 'Normale Schriftstärke. Keine Beosnderheit.',
           'url': 'http://fonts.gstatic.com/s/alegreya/v10/4UaBrEBBsBhlBjvfkRLm.ttf'
         },
         {
           'id': 2,
           'type': 'bold',
-          'info': 'Lorem ipsum for Serif bold font',
+          'info': 'Dicke Schriftstärke. Wirkt noch masiver auf den Betrachter.',
           'url': 'http://fonts.gstatic.com/s/alegreya/v10/4UaGrEBBsBhlBjvfkSoS5I3J.ttf'
+        }
+      ]
+    },
+    {
+      'id': 2,
+      'name': 'Handschrift',
+      'info': 'Signalisiert Individualität, Persönlichkeit und Dynamik. Gut als Blickfang einsetzbar',
+      'styles': [
+        {
+          'id': 0,
+          'type': 'light',
+          'info': 'Leider keine Schrift vorhanden',
+          'url': ''
+        },
+        {
+          'id': 1,
+          'type': 'regular',
+          'info': 'Normale Schriftstärke. Keine Besonderheit.',
+          'url': 'http://fonts.gstatic.com/s/grandhotel/v5/7Au7p_IgjDKdCRWuR1azpmQN.ttf'
+        },
+        {
+          'id': 2,
+          'type': 'bold',
+          'info': 'Leider keine Schrift vorhanden',
+          'url': ''
         }
       ]
     }
@@ -191,7 +216,7 @@ export class SigneratePage {
         }
       }
 
-      let options = {svgAttrs: {id: 'previewSvg', height: 100, width: 300}};
+      let options = {svgAttrs: {id: 'previewSvg', height: 150, width: 300}};
 
       let svg = makerjs.exporter.toSVG(textModel, options);
 
@@ -201,7 +226,8 @@ export class SigneratePage {
         svg = svg.substring(gPosition, svg.length - 6);
         document.getElementById('previewSvg').innerHTML += svg;
         document.getElementById('previewSvg').removeAttribute('viewBox');
-        document.getElementById('secondLetter').setAttribute('transform', 'translate(100,0)');
+        document.getElementById('secondLetter').setAttribute('transform', 'translate(175,10)');
+        document.getElementById('firstLetter').setAttribute('transform', 'translate(100,10)');
         document.getElementsByTagName('g')[0].removeAttribute('fill');
         document.getElementsByTagName('g')[0].style.fill = '#000';
         document.getElementsByTagName('g')[1].removeAttribute('fill');

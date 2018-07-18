@@ -14,3 +14,31 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.toolbar-background-md,
+.toolbar-background-ios {
+  background: color($colors, primary);
+}
+
+.toolbar-title-md,
+.toolbar-title-ios {
+  color: #fff;
+}
+
+.bar-button-default-md,
+.bar-button-default-ios {
+  color: #fff;
+
+  &:hover:not(.disable-hover) {
+    color: color($colors, secondary);
+  }
+}
+
+.button-md-secondary,
+.button-ios-secondary {
+  color: #fff;
+}
+
+h1 {
+  color: color($colors, secondary);
+}
