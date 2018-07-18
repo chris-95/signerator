@@ -22,7 +22,25 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      platforms : {
+        ios : {
+          // These options are available in ionic-angular@2.0.0-beta.2 and up.
+          scrollAssist: false,    // Valid options appear to be [true, false]
+          autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
+        },
+        android: {
+          // These options are available in ionic-angular@2.0.0-beta.2 and up.
+          scrollAssist: false,    // Valid options appear to be [true, false]
+          autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
+        },
+        windows: {
+          // These options are available in ionic-angular@2.0.0-beta.2 and up.
+          scrollAssist: false,    // Valid options appear to be [true, false]
+          autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
+        }
+      }
+    }),
     AccordionModule.forRoot()
   ],
   bootstrap: [IonicApp],
