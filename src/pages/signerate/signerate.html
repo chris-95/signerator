@@ -13,17 +13,17 @@
   <ion-slides #signupSlider pager (ionSlideDidChange)="onSlideChange()">
 
     <ion-slide>
-      <h1>Gib deine Initialien ein!</h1>
+      <h1 class="headline">Gib deine Initialien ein!</h1>
 
         <form [formGroup]="slideOneForm">
-          <ion-list>
+          <ion-list no-lines>
             <ion-item>
               <ion-label floating>Erster Buchstabe</ion-label>
               <ion-input formControlName="firstLetter" type="text" [class.invalid]="!slideOneForm.controls.firstLetter.valid && (slideOneForm.controls.firstLetter.dirty || submitAttempt)"></ion-input>
             </ion-item>
 
             <ion-item *ngIf="!slideOneForm.controls.firstLetter.valid  && (slideOneForm.controls.firstLetter.dirty || submitAttempt)">
-              <p>Bitte einen Buchstaben eingeben.</p>
+              <p class="error">Bitte einen Buchstaben eingeben.</p>
             </ion-item>
 
             <ion-item>
@@ -32,15 +32,15 @@
             </ion-item>
 
             <ion-item *ngIf="!slideOneForm.controls.secondLetter.valid  && (slideOneForm.controls.secondLetter.dirty || submitAttempt)">
-              <p>Bitte einen Buchstaben eingeben.</p>
+              <p class="error">Bitte einen Buchstaben eingeben.</p>
             </ion-item>
           </ion-list>
         </form>
-      <button ion-button color="primary" (click)="next()">Weiter</button>
+      <button ion-button color="secondary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
-      <h1>Wähle eine Schrift!</h1>
+      <h1 class="headline">Wähle eine Schrift!</h1>
 
         <form [formGroup]="slideTwoForm">
           <ion-list no-lines radio-group formControlName="font" [(ngModel)]="selectedFont">
@@ -51,12 +51,13 @@
             </ion-item>
           </ion-list>
         </form>
-      <button ion-button color="primary" (click)="next()">Weiter</button>
+      <button ion-button color="secondary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
-      <h1>Konfiguriere deine Schrift!</h1>
+      <h1 class="headline">Konfiguriere deine Schrift!</h1>
 
+      <p class="error" *ngIf="!this.slideTwoForm.valid">Bitte eine Schrift auswählen</p>
 
         <form [formGroup]="slideThreeForm">
           <ion-list no-lines radio-group formControlName="url" [(ngModel)]="fontURL">
@@ -71,21 +72,21 @@
             </div>
           </ion-list>
         </form>
-      <button ion-button color="primary" (click)="next()">Weiter</button>
+      <button ion-button color="secondary" (click)="next()">Weiter</button>
     </ion-slide>
 
     <ion-slide>
-      <ion-list>
+      <ion-list no-lines>
           <ion-item>
             <div id="renderDiv"></div>
-            <h2 *ngIf="!showPreview">Bitte alles ausfüllen!</h2>
+            <h2 class="error" *ngIf="!showPreview">Bitte alles ausfüllen!</h2>
           </ion-item>
       </ion-list>
-      <p>
+      <p *ngIf="showPreview">
         <ion-icon name="compass"></ion-icon>
         Schüttel dein Smartphone um das Logo zu generieren.
       </p>
-      <button ion-button color="primary" (click)="save()">Generiere Logo</button>
+      <button *ngIf="showPreview" ion-button color="secondary" (click)="save()">Generiere Logo</button>
     </ion-slide>
   </ion-slides>
 </ion-content>
